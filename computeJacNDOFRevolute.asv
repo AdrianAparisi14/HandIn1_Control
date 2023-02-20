@@ -1,0 +1,15 @@
+function [JP, JO] = computeJacNDOFRevolute(z, p, N)
+%computeJacNDOFRevolute compute the jacobian for a revolute robot with N
+% joints  
+JP = sym(zeros(N, N, N));
+JO = sym(zeros(N, N, N));
+for i = 1:N
+    for j = 1:N
+        JP(:, j, i) = cross(z(:, i), p(1:3, i)); % the 3 in the ps is because they are not homogenized
+        JO(:, j, i) = z(:, j);
+        if j >= i % the nth joint depend only on the n-1th, n-2th, ... joints
+            break
+        end
+    end
+end
+end
