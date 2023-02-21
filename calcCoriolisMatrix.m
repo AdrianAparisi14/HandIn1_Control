@@ -9,3 +9,16 @@ for k=1:N
 end
 end
 
+C = sym(zeros(N, N));
+for i=1:N
+    for j=1:N
+        for k=1:N
+            C(i, j) = C(i, j) + 0.5 * (...
+                diff(B(i, j), q(k)) + ...
+                diff(B(i, k), q(j)) - ...
+                diff(B(j, k), q(i)) ...
+            ) * dq(k);
+            C(i, j) = simplify(C(i, j));
+        end
+    end
+end

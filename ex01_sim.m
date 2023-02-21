@@ -48,7 +48,7 @@ ddq = [0, 0, 0]';
 N = length(q);
 D = 5 * eye(N);
 
-forwardDyn = @(q, dq) inv(getB(q)) * (-D * dq - zeros(3,1) - getG(q)); %zeros(3,1) actually should be getC but in this script gives a matrix 3x3 and must be 3x1
+forwardDyn = @(q, dq) inv(getB(q)) * (-D * dq - getC(q, dq)*dq - getG(q)); %zeros(3,1) actually should be getC but in this script gives a matrix 3x3 and must be 3x1
 
 % odefun and ode45 are matlab tools to solve differential equations.
 % First we have to convert to a state-variable form so the first term will
