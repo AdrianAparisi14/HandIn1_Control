@@ -41,8 +41,8 @@ T00 = eye(4);
 T01 = DHParamGen(d(1), q(1), a(1), alpha(1));
 T12 = DHParamGen(d(2), q(2), a(2), alpha(2));
 T23 = DHParamGen(d(3), q(3), a(3), alpha(3));
-T02 = simplify(T01*T12);
-T03 = simplify(T02*T23);
+T02 = T01*T12;
+T03 = T02*T23;
 Ts = reshape([T00 T01 T02 T03], [4,4,4]); % the three transform matrix to base
 
 % ok
@@ -91,7 +91,8 @@ Is = reshape([I01 I02 I03], [3, 3, N]);
 % dependent on the pcl beside the g and the masses
 gravTerms = calcGravity(CoM, g0, N, m);
 Epot = -sum(gravTerms);
-grav = simplify(jacobian(Epot, q)');
+%grav = simplify(jacobian(Epot, q)');
+grav = jacobian(Epot, q)';
 matlabFunction(grav, 'File', 'gravity', 'Outputs', {'grav'}); % takes your syms value and define a function depending on the "basics" parameters
 
 %% Compute inertia tensor
